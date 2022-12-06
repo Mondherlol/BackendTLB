@@ -1,3 +1,4 @@
+const movie = require('../models/movie.js');
 const Movie = require('../models/movie.js');
 
 exports.getAllMovies = (req, res, next) => {
@@ -30,3 +31,41 @@ exports.deleteMovie = (req, res, next) => {
         .then(() => res.status(200).json({ message: 'Film supprimé !'}))
         .catch(error => res.status(400).json({ error }));
 };
+exports.addComment =  (req,res,next) => {
+      const comm = ({
+        ...req.body
+      });
+      comm.like = 0;
+      comm.dislike = 0;
+     Movie.updateOne(
+      {_id: req.params.idFilm},
+      { $push: { commentaires: comm}}
+      )
+      .then(()=>res.status(200).json({message:'Commentaire ajouté !'}))
+      .catch(error=>res.status(400).json({error}));
+
+
+};
+exports.likeComment = (req,res,next) =>{
+  done = false;
+  Movie.findOne({ _id: req.params.idFilm })
+  .then(movie => {
+    movie.commentaires.forEach(c => {
+      if(c._id == req.params.idCom){
+        c.like++;
+        done=true;
+        movie.save();
+        res.send({ message: "Like ajouté " });
+        next();
+      }
+ 
+    });
+    if(!done){
+      res.send({ message: "Commentaire inexistant. " });
+  
+    }
+  })
+  .catch(error => res.status(404).json({ error }));
+
+
+}

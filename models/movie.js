@@ -6,6 +6,17 @@ const movieSchema = mongoose.Schema({
   description: { type: String, required: false },
   posterURL: { type: String, required: false },
   note: { type:Number, required:false},
+  commentaires : [{
+    idUser:String,
+    pseudoUser:String,
+    pdpUser:String,
+    note : Number,
+    avisCourt : String,
+    avisLong : String,
+    datePublication: Date,
+    like: Number,
+    dislike : Number
+     } ],
   realisateur : { type:String, required: false},
   trailerURL : { type:String, required: false},
   themes : { type:String, required : false},
