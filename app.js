@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const movieRoutes = require('./routes/movie.js');
 const userRoutes = require('./routes/user.js');
+const commentRoutes = require('./routes/comments');
 const path = require('path');
 const app = express();
 app.use(express.json());
@@ -25,7 +26,9 @@ app.use((req, res, next) => {
 
 app.use('/api/movie',movieRoutes);
 app.use('/api/user',userRoutes);
+app.use('/api/movie/commentaire/',commentRoutes);
 app.use('/images',express.static(path.join(__dirname,'images')));
+
 
 
   module.exports = app;

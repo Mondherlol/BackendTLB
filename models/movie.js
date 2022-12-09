@@ -15,7 +15,9 @@ const movieSchema = mongoose.Schema({
     avisLong : String,
     datePublication: Date,
     like: Number,
-    dislike : Number
+    dislike : Number,
+    usersLiked : {type : [String]},
+    usersDisliked : {type : [String]}
      } ],
   realisateur : { type:String, required: false},
   trailerURL : { type:String, required: false},
