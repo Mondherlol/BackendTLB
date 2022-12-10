@@ -29,7 +29,15 @@ exports.addComment =  (req,res,next) => {
       if(alreadyComment==false){ //S'il n'a pas été commenté, on ajoute
         Movie.updateOne(
           {_id: req.params.idFilm},
-          { $push: { commentaires: comm}}
+          {
+            $set: {
+              note:(((parseFloat(movie.note)* parseFloat(movie.commentaires.length) )+parseFloat(comm.note))/(parseFloat(movie.commentaires.length)+1))//calculer nouvelle moyenne
+            },
+            $push: { commentaires: comm} 
+          }
+          
+          
+          
           )
           .then(()=>res.status(200).json({message:'Commentaire ajouté !'})) 
           .catch(error=>res.status(400).json({error}));
@@ -107,6 +115,10 @@ exports.deleteComment = (req, res, next) => {
           movie.commentaires.forEach(c => {  
                 if(req.auth.userId == c.idUser){ //Chercher le commentaire de l'utilisateur
                     existe=true; 
+                    if (movie.commentaires.length  > 1 ){
+                      movie.note = ((parseFloat(movie.note) * parseFloat(movie.commentaires.length))- parseFloat(c.note) )/( parseFloat(movie.commentaires.length) -1 ) //calculer nouvelle moyenne
+                    }else movie.note =0;
+
                     var indexComToRemove = movie.commentaires.indexOf(c);
                     movie.commentaires.splice(indexComToRemove,1);
                     movie.save();
