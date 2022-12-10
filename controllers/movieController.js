@@ -67,9 +67,10 @@ exports.getMoviesByThemes = (req, res, next) => {
       movies.forEach(m => {
         m.themes.forEach(t =>{
           themes.forEach(t2 => {
-
               if (t==t2){
-                similarMovies.push(m);
+                if(similarMovies.indexOf(m)==-1){
+                  similarMovies.push(m);
+                }
               }
           } )
         })
@@ -79,7 +80,7 @@ exports.getMoviesByThemes = (req, res, next) => {
     .catch(error => res.status(400).json({ error }));
 };
 
-//Récuperer avec un seule theme
+//Récuperer avec un seul theme
 exports.getMoviesByTheme = (req, res, next) => {
   theme = req.params.theme;
   console.log(theme);
@@ -114,6 +115,25 @@ exports.getMovieByStars = (req,res,next)=>{
     .catch(error => res.status(400).json({ error }));
 };
 
+
+//Récuperer films avec titre
+exports.getMoviesByTitle = (req, res, next) => {
+  titre = (req.params.titre).toLowerCase();
+  console.log(titre);
+  Movie.find()
+    .then(movies =>{
+      let result = [];
+      movies.forEach(m => {
+        if(m.titre.toLowerCase().includes(titre)){
+          result.push(m);
+        }
+      });
+      res.status(200).json(result);
+    })
+    .catch(error => res.status(400).json({ error }));
+};
+
 exports.getMovieByStars = (req,res,next) => {
 
 }
+

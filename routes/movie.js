@@ -1,4 +1,3 @@
-const { Router } = require('express');
 const express = require('express');
 const router = express.Router();
 const auth = require('../middleware/auth');
@@ -10,11 +9,13 @@ router.post('/theme/',movieCtrl.getMoviesByThemes);
 router.get('/theme/:theme',movieCtrl.getMoviesByTheme);
 router.get('/stars/:stars',movieCtrl.getMovieByStars);
 
+router.get('/titre/:titre',movieCtrl.getMoviesByTitle);
+
 router.get('/', movieCtrl.getAllMovies);
 router.get('/:id', movieCtrl.getOneMovie);
 router.post('/', auth, movieCtrl.addMovie);
-router.put('/:id',movieCtrl.updateMovie);
-router.delete('/:id', movieCtrl.deleteMovie);
+router.put('/:id',auth,movieCtrl.updateMovie);
+router.delete('/:id',auth, movieCtrl.deleteMovie);
 
 
 
