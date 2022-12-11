@@ -3,6 +3,7 @@ const router = express.Router();
 const auth = require('../middleware/auth');
 const movieCtrl = require('../controllers/movieController');
 
+
 //Récuperer films avec un ou plusieurs themes
 router.post('/theme/',movieCtrl.getMoviesByThemes); 
 //Récuper films avec un theme

@@ -100,6 +100,7 @@ exports.getMoviesByTheme = (req, res, next) => {
 };
 
 exports.getMovieByStars = (req,res,next)=>{
+
   stars = req.params.stars;
   console.log(stars);
   Movie.find()
@@ -133,7 +134,5 @@ exports.getMoviesByTitle = (req, res, next) => {
     .catch(error => res.status(400).json({ error }));
 };
 
-exports.getMovieByStars = (req,res,next) => {
 
-}
 

@@ -134,3 +134,37 @@ exports.deleteComment = (req, res, next) => {
         .catch(error => res.status(404).json({ error }));    
 
 };
+
+exports.getUserComments = (req, res,next)=>{
+  idUser = req.params.idUser;
+  let comm = {};
+  let userComments=[];
+  Movie.find()
+  .then(movies =>{
+    movies.forEach(m=>{
+      m.commentaires.forEach(c => {  
+        if(idUser == c.idUser){
+          comm = {
+            titreFilm:m.titre,
+            idFilm:m._id,
+            imageFilm:m.posterURL,
+            note : c.note,
+            avisCourt : c.avisCourt,
+            avisLong : c.avisLong,
+            datePublication: c.datePublication,
+            like: c.like,
+            dislike : c.dislike,
+            nbCommentaires : m.commentaires.length,
+            moyenneFilm:m.note,
+            idCommentaire:c._id
+          }
+          userComments.push(comm);
+          
+        }
+    
+    });
+    })
+    res.status(200).json({userComments});
+  })
+  .catch(error => res.status(400).json({ error }));
+};
