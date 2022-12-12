@@ -21,6 +21,7 @@ const movieSchema = mongoose.Schema({
      } ],
   realisateur : { type:String, required: false},
   trailerURL : { type:String, required: false},
+  streaming : {type:String, required:false},
   themes : {type:[String]},
   userId: { type: String, required: false }
 
