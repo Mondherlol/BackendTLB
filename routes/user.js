@@ -10,5 +10,6 @@ router.get('/:id',userController.getOneUser);
 router.post('/signup',  multer, userController.signup);
 router.post('/login',userController.login);
 router.delete('/:id',auth,userController.deleteUser);
+router.put('/:id',auth,userController.updateUser);
 router.post('/exist',userController.alreadyExist);
 module.exports = router;

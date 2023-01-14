@@ -51,9 +51,15 @@ exports.login = (req,res,next)=> {
 }
 
 exports.updateUser= (req,res,next)=>{
-    User.findOne({ _id: req.params.id })
+    userId = req.auth.userId;
+    console.log(userId);
+    User.findOne({ _id: userId })
         .then(user => {
+
             user.pseudo=req.body.pseudo;
+            user.email = req.body.email;
+            user.pdp = req.body.pdp;
+            user.pdc = req.body.pdc;
             user.save();
             res.status(200).json({message:"Utilisateur modifié avec succès."})
         })

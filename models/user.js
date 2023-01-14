@@ -6,6 +6,7 @@ const userSchema = mongoose.Schema({
     mdp: { type:String, required: true },
     pseudo: { type:String, required: true},
     pdp : {type:String, required:true},
+    pdc : {type:String, required:false},
     admin: {type:Boolean, required:true}
 });
 
